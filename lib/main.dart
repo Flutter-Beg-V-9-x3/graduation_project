@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_graduation_project/core/features/movie_details_1/ui/view/movie_detalis_screen1.dart';
 import 'package:flutter_graduation_project/core/theme/app_theme.dart';
 
 void main() {
@@ -13,9 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Beg',
-      theme:  AppTheme.theme,
-      home: const Placeholder(),
+      theme: AppTheme.theme,
+      home: const MovieDetailsScreen1(),
     );
   }
 }
-
