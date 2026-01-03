@@ -7,7 +7,6 @@ class LoginHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    /// مطابق للتصميم (≈ 36% من الشاشة)
     final double headerHeight = size.height * 0.36;
 
     return SizedBox(
@@ -16,38 +15,28 @@ class LoginHeader extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          /// Image
-          Image.asset(
-            'assets/images/login_im.png',
-            fit: BoxFit.cover,
-          ),
+          // Image
+          Image.asset('assets/images/login_im.png', fit: BoxFit.cover),
 
-          /// Dark gradient (من تحت لفوق)
+          /// Dark gradient
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
-                colors: [
-                  Color(0xFF191022),
-                  Colors.transparent,
-                ],
+                colors: [Color(0xFF191022), Colors.transparent],
               ),
             ),
           ),
 
-          /// Purple overlay (خفيف جدًا)
-          Container(
-            color: const Color(0xFF7F13EC).withOpacity(0.04),
-          ),
+          /// Purple overlay (very light)
+          Container(color: const Color(0xFF7F13EC).withOpacity(0.04)),
 
           /// Icon
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.only(
-                bottom: headerHeight * 0.10,
-              ),
+              padding: EdgeInsets.only(bottom: headerHeight * 0.10),
               child: Container(
                 width: 64,
                 height: 64,
