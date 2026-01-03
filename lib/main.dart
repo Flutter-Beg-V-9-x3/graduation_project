@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_graduation_project/core/features/movie_details_1/ui/view/movie_detalis_screen1.dart';
 import 'package:flutter_graduation_project/core/theme/app_theme.dart';
+import 'package:flutter_graduation_project/features/profile/ui/view/profile_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Beg',
       theme: AppTheme.theme,
-      home: const MovieDetailsScreen1(),
+      home: const ProfileScreen(),
     );
   }
 }

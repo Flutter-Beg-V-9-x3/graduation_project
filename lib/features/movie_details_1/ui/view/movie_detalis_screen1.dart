@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_graduation_project/core/features/movie_details_1/ui/view/widgets/movie_details_header.dart';
-import 'package:flutter_graduation_project/core/features/movie_details_1/ui/view/widgets/movie_info_card.dart';
-
+import 'package:flutter_graduation_project/features/movie_details_1/ui/widgets/movie_details_header.dart';
+import 'package:flutter_graduation_project/features/movie_details_1/ui/widgets/movie_info_card.dart';
 
 class MovieDetailsScreen1 extends StatefulWidget {
   const MovieDetailsScreen1({super.key});
