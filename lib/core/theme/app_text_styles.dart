@@ -11,6 +11,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w700,
     color: AppColors.textPrimary,
     height: 1.2,
+    letterSpacing: -0.8, //tracking-tight  
   );
 
   static const TextStyle headline = TextStyle(
@@ -28,7 +29,6 @@ class AppTextStyles {
     color: AppColors.textPrimary,
   );
 
-  // إضافة حجم 18 (مثل Write Review)
   static const TextStyle sectionTitle = TextStyle(
     fontFamily: fontFamily,
     fontSize: 18,
@@ -36,7 +36,6 @@ class AppTextStyles {
     color: AppColors.textPrimary,
   );
 
-  // إضافة حجم 20 (مثل Interstellar)
   static const TextStyle movieTitle = TextStyle(
     fontFamily: fontFamily,
     fontSize: 20,
@@ -122,11 +121,27 @@ class AppTextStyles {
     color: Colors.white,
   );
 
+  // (Google/Apple)
+  static const TextStyle socialButton = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: AppColors.textPrimary,
+  );
+
   static const TextStyle buttonSmall = TextStyle(
     fontFamily: fontFamily,
     fontSize: 14,
     fontWeight: FontWeight.w500,
     color: AppColors.textMuted,
+  );
+
+  // ===== Links & Interactive ===== "Log in"
+  static const TextStyle link = TextStyle(
+    fontFamily: fontFamily,
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: AppColors.primary,
   );
 
   // ===== Captions / Small Text =====
@@ -165,7 +180,7 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     color: AppColors.textMuted,
   );
-
+ 
   // ===== Movie Info Text =====
   static const TextStyle movieInfo = TextStyle(
     fontFamily: fontFamily,
