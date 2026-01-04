@@ -10,7 +10,7 @@ class AppTheme {
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.primary,
       brightness: Brightness.dark,
-      primary: AppColors.primary,
+      primary: const Color.fromRGBO(127, 19, 236, 1),
       onPrimary: Colors.white,
       surface: AppColors.surface,
       background: AppColors.background,
