@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_graduation_project/core/theme/app_text_styles.dart';
+import 'package:flutter_graduation_project/features/in_app_trailer_player/ui/view/trailer_player.dart';
 
 class MovieInfoCard extends StatelessWidget {
   const MovieInfoCard({super.key});
@@ -42,13 +43,14 @@ class MovieInfoCard extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           Expanded(
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
+
               children: [
-                Text('Interstellar', style: AppTextStyles.movieTitle),
-                SizedBox(height: 8),
-                Text(
+                const Text('Interstellar', style: AppTextStyles.movieTitle),
+                const SizedBox(height: 8),
+                const Text(
                   '2014 • Sci-Fi • Drama',
                   style: AppTextStyles.movieInfoSemiBold,
                 ),
