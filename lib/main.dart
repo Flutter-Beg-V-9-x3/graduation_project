@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
-import 'core/theme/app_theme.dart';
-import 'features/home/home_screen.dart';
-
-import 'package:flutter_graduation_project/features/home/ui/view/home_screen.dart';
-import 'package:flutter_graduation_project/features/home/ui/view/movie_details_screen.dart';
-import 'package:flutter_graduation_project/features/home/ui/widgets/movie_header_widget.dart';
-
-import 'package:flutter_graduation_project/features/home/ui/widgets/movie_reviews_widget.dart';
+import 'package:flutter_graduation_project/core/theme/app_theme.dart';
+import 'package:flutter_graduation_project/features/movie_details_1/ui/view/movie_detalis_screen1.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Moive',
+      title: 'Flutter Beg',
       theme: AppTheme.theme,
-      home: const HomeScreen(),
+      home: const MovieDetailsScreen1(),
     );
   }
 }
