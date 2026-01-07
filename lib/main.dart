@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_graduation_project/core/theme/app_theme.dart';
+import 'package:flutter_graduation_project/features/login/ui/view/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Beg',
       theme:  AppTheme.theme,
-      home: const Placeholder(),
+      home:  LoginScreen(),
     );
   }
 }
