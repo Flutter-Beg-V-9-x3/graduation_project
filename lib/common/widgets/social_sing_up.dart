@@ -14,6 +14,7 @@ class SocialSignUpButtons extends StatelessWidget {
           child: ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
               backgroundColor: Color(0xff302839),
+
               side: BorderSide(
                 color: Colors.white.withOpacity(0.3),
                 width: 0.5,
