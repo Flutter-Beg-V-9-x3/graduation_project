@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_graduation_project/core/theme/app_text_styles.dart';
 
-class SignUpForm extends StatelessWidget {
+class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
+
+  @override
+  State<SignUpForm> createState() => _SignUpFormState();
+}
+
+class _SignUpFormState extends State<SignUpForm> {
+  // متغيرات للتحكم بحالة إظهار/إخفاء كلمة السر
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -51,15 +60,22 @@ class SignUpForm extends StatelessWidget {
         const Text('Password', style: AppTextStyles.label),
         const SizedBox(height: 8),
         TextFormField(
-          obscureText: true,
+          obscureText: _obscurePassword, // مرتبط بالمتغير
           style: AppTextStyles.input,
           decoration: InputDecoration(
             hintText: '••••••••',
             hintStyle: AppTextStyles.inputPlaceholder,
             prefixIcon: const Icon(Icons.lock, color: Colors.white54),
             suffixIcon: IconButton(
-              icon: const Icon(Icons.visibility_off, color: Colors.white54),
-              onPressed: () {},
+              icon: Icon(
+                _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                color: Colors.white54,
+              ),
+              onPressed: () {
+                setState(() {
+                  _obscurePassword = !_obscurePassword; // تبديل الحالة
+                });
+              },
             ),
             filled: true,
             border: OutlineInputBorder(
@@ -75,15 +91,25 @@ class SignUpForm extends StatelessWidget {
         const Text('Confirm Password', style: AppTextStyles.label),
         const SizedBox(height: 8),
         TextFormField(
-          obscureText: true,
+          obscureText: _obscureConfirmPassword, // مرتبط بالمتغير الثاني
           style: AppTextStyles.input,
           decoration: InputDecoration(
             hintText: '••••••••',
             hintStyle: AppTextStyles.inputPlaceholder,
             prefixIcon: const Icon(Icons.lock_reset, color: Colors.white54),
             suffixIcon: IconButton(
-              icon: const Icon(Icons.visibility_off, color: Colors.white54),
-              onPressed: () {},
+              icon: Icon(
+                _obscureConfirmPassword
+                    ? Icons.visibility_off
+                    : Icons.visibility,
+                color: Colors.white54,
+              ),
+              onPressed: () {
+                setState(() {
+                  _obscureConfirmPassword =
+                      !_obscureConfirmPassword; // تبديل الحالة
+                });
+              },
             ),
             filled: true,
             border: OutlineInputBorder(

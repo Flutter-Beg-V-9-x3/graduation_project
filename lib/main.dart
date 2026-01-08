@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Beg',
       theme: AppTheme.theme,
-      home: const SignUpScreen(),
+      home: const RegisterScreen(),
     );
   }
 }

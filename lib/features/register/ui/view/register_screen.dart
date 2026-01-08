@@ -4,9 +4,10 @@ import 'package:flutter_graduation_project/common/widgets/social_sing_up.dart';
 import 'package:flutter_graduation_project/features/register/ui/widgets/already_have_account.dart';
 import 'package:flutter_graduation_project/features/register/ui/widgets/create_account_section.dart';
 import 'package:flutter_graduation_project/features/register/ui/widgets/sing_up_form.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,24 @@ class SignUpScreen extends StatelessWidget {
                 const SizedBox(height: 30),
                 const OrDivider(),
                 const SizedBox(height: 60),
-                SocialSignUpButtons(),
+                Row(
+                  children: [
+                    SocialSignUpButton(
+                      icon: FontAwesomeIcons.google,
+                      label: 'Google',
+                      iconColor: Colors.white,
+                      onPressed: () {},
+                    ),
+                    const SizedBox(width: 16),
+                    SocialSignUpButton(
+                      icon: FontAwesomeIcons.apple,
+                      label: 'Apple',
+                      iconColor: Colors.white,
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+
                 const SizedBox(height: 20),
                 AlreadyHaveAccount(
                   onTapLogin: () {
