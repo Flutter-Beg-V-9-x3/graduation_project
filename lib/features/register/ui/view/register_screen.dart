@@ -29,14 +29,7 @@ class RegisterScreen extends StatelessWidget {
                 const SizedBox(height: 60),
                 SocialSignUpButtons(),
                 const SizedBox(height: 20),
-                AlreadyHaveAccount(
-                  onTapLogin: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Placeholder()),
-                    );
-                  },
-                ),
+                AlreadyHaveAccount(),
               ],
             ),
           ),
