@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_graduation_project/features/home/ui/widgets/Discover_section.dart';
+import 'package:flutter_graduation_project/features/home/ui/widgets/category_chips_widget.dart';
 import 'package:flutter_graduation_project/features/home/ui/widgets/for_you_section.dart';
 import 'package:flutter_graduation_project/features/home/ui/widgets/search_bar_widget.dart';
 import 'package:flutter_graduation_project/features/home/ui/widgets/trending_section.dart';
-import 'package:flutter_graduation_project/features/home/ui/widgets/category_chips_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,7 +17,9 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
+              DiscoverWidget(),
+
+              SizedBox(height: 10),
               HomeSearchBar(),
               SizedBox(height: 20),
               CategoryChips(),
