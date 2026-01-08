@@ -5,8 +5,8 @@ import 'package:flutter_graduation_project/features/register/ui/widget/already_h
 import 'package:flutter_graduation_project/features/register/ui/widget/create_account_section.dart';
 import 'package:flutter_graduation_project/features/register/ui/widget/sing_up_form.dart';
 
-class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
