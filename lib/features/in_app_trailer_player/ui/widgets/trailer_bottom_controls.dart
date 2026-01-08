@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'dart:html' as html;
 
 class TrailerBottomControls extends StatelessWidget {
   final VideoPlayerController controller;
@@ -158,7 +157,9 @@ class TrailerBottomControls extends StatelessWidget {
                 const SizedBox(width: 10),
                 IconButton(
                   icon: Icon(
-                    _getFullscreenIcon(context), // دالة جديدة رح نعملها
+                    MediaQuery.of(context).orientation == Orientation.landscape
+                        ? Icons.fullscreen_exit
+                        : Icons.fullscreen,
                     color: Colors.white,
                     size: 32,
                   ),
@@ -170,20 +171,5 @@ class TrailerBottomControls extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  IconData _getFullscreenIcon(BuildContext context) {
-    bool isFullscreen = false;
-
-    if (kIsWeb) {
-      // على الويب: نشوف إذا كان العنصر الرئيسي في fullscreen
-      isFullscreen = html.document.fullscreenElement != null;
-    } else {
-      // على الموبايل: نشوف إذا كان التوجيه landscape
-      isFullscreen =
-          MediaQuery.of(context).orientation == Orientation.landscape;
-    }
-
-    return isFullscreen ? Icons.fullscreen_exit : Icons.fullscreen;
   }
 }

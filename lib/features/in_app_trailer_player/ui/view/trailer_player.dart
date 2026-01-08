@@ -6,7 +6,6 @@ import 'package:flutter_graduation_project/features/in_app_trailer_player/ui/wid
 import 'package:flutter_graduation_project/features/in_app_trailer_player/ui/widgets/trailer_top_controls.dart';
 import 'package:flutter_graduation_project/features/in_app_trailer_player/ui/widgets/trailer_video_player.dart';
 import 'package:video_player/video_player.dart';
-import 'dart:html' as html;
 
 class TrailerPlayer extends StatefulWidget {
   final String videoUrl;
@@ -129,31 +128,22 @@ class _TrailerPlayerState extends State<TrailerPlayer> {
                       });
                     },
                     onToggleFullscreen: () async {
-                      if (kIsWeb) {
-                        final element = html.document.documentElement;
-                        if (html.document.fullscreenElement == null) {
-                          await element?.requestFullscreen();
-                        } else {
-                          html.document.exitFullscreen();
-                        }
+                      if (MediaQuery.of(context).orientation ==
+                          Orientation.portrait) {
+                        SystemChrome.setPreferredOrientations([
+                          DeviceOrientation.landscapeLeft,
+                          DeviceOrientation.landscapeRight,
+                        ]);
+                        SystemChrome.setEnabledSystemUIMode(
+                          SystemUiMode.immersiveSticky,
+                        );
                       } else {
-                        if (MediaQuery.of(context).orientation ==
-                            Orientation.portrait) {
-                          SystemChrome.setPreferredOrientations([
-                            DeviceOrientation.landscapeLeft,
-                            DeviceOrientation.landscapeRight,
-                          ]);
-                          SystemChrome.setEnabledSystemUIMode(
-                            SystemUiMode.immersiveSticky,
-                          );
-                        } else {
-                          SystemChrome.setPreferredOrientations([
-                            DeviceOrientation.portraitUp,
-                          ]);
-                          SystemChrome.setEnabledSystemUIMode(
-                            SystemUiMode.edgeToEdge,
-                          );
-                        }
+                        SystemChrome.setPreferredOrientations([
+                          DeviceOrientation.portraitUp,
+                        ]);
+                        SystemChrome.setEnabledSystemUIMode(
+                          SystemUiMode.edgeToEdge,
+                        );
                       }
                     },
                   ),

@@ -6,10 +6,10 @@ class MovieDetailsScreen2 extends StatefulWidget {
   const MovieDetailsScreen2({super.key});
 
   @override
-  State<MovieDetailsScreen2> createState() => _MovieDetailsScreen1State();
+  State<MovieDetailsScreen2> createState() => _MovieDetailsScreen2State();
 }
 
-class _MovieDetailsScreen1State extends State<MovieDetailsScreen2> {
+class _MovieDetailsScreen2State extends State<MovieDetailsScreen2> {
   void _onBackOrCancel() {
     Navigator.pop(context);
   }
@@ -28,7 +28,6 @@ class _MovieDetailsScreen1State extends State<MovieDetailsScreen2> {
               const MovieInfoCard(),
             ],
           ),
-
         ],
       ),
     );
