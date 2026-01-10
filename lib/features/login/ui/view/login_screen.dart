@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_graduation_project/common/widgets/divider.dart';
+import 'package:flutter_graduation_project/common/widgets/main_navigation.dart';
 import 'package:flutter_graduation_project/common/widgets/social_sing_up.dart';
 import 'package:flutter_graduation_project/core/theme/app_colors.dart';
+import 'package:flutter_graduation_project/features/home/ui/view/home_screen.dart';
 import 'package:flutter_graduation_project/features/login/ui/widget/custom_button.dart';
 import 'package:flutter_graduation_project/features/login/ui/widget/login_form.dart';
 import 'package:flutter_graduation_project/features/login/ui/widget/login_header.dart';
@@ -9,6 +12,9 @@ import 'package:flutter_graduation_project/features/login/ui/widget/recovery_pas
 import 'package:flutter_graduation_project/features/login/ui/widget/welcome_back.dart';
 import 'package:flutter_graduation_project/features/register/ui/view/register_screen.dart';
 import 'package:flutter_graduation_project/features/register/ui/widget/auth_switch_text.dart';
+
+import 'package:flutter_graduation_project/features/auth/logic/auth_cubit.dart';
+import 'package:flutter_graduation_project/features/auth/logic/auth_state.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,7 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
 
   @override
@@ -35,11 +40,11 @@ class _LoginScreenState extends State<LoginScreen> {
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   welcome_back(),
+
                   LoginForm(
                     formKey: _formKey,
                     emailController: emailController,
@@ -48,41 +53,73 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: [RecoveryPassword()],
+                    children: const [
+                      RecoveryPassword(),
+                    ],
                   ),
 
                   const SizedBox(height: 18),
 
-                  SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: CustomButton(
-                      formKey: _formKey,
-                      text: "Log In",
-                      showDefaultMessages: false,
-                      onPressedAsync: () async {
+                  /// ---------------- BlocConsumer هنا ---------------- ///
+                  BlocConsumer<AuthCubit, AuthState>(
+                    listener: (context, state) {
+                      if (state is AuthError) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              "This feature has not yet been added !.",
-                            ),
-                            backgroundColor: AppColors.textPurple,
-                            duration: Duration(seconds: 2),
+                          SnackBar(
+                            content: Text(state.message),
+                            backgroundColor: Colors.red,
                           ),
                         );
-                        return false;
-                      },
-                    ),
+                      }
+
+                      if (state is AuthSuccess) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Logged in successfully!"),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+
+                        // الانتقال للصفحة التالية
+                        // TODO: غيرها لصفحة الهوم لاحقًا
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const MainNavigation(),
+                          ),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      return SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: CustomButton(
+                          formKey: _formKey,
+                          text: state is AuthLoading ? "Loading..." : "Log In",
+                          showDefaultMessages: false,
+                          onPressedAsync: () async {
+                            if (_formKey.currentState!.validate()) {
+                              context.read<AuthCubit>().login(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                  );
+                            }
+                            return false;
+                          },
+                        ),
+                      );
+                    },
                   ),
-                  SizedBox(height: 16),
+                  /// -------------------------------------------------- ///
 
-                  OrDivider(),
+                  const SizedBox(height: 16),
 
-                  SizedBox(height: 16),
+                  const OrDivider(),
+                  const SizedBox(height: 16),
 
                   SocialSignUpButtons(),
-
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
                   AuthSwitchText(
                     normalText: "Don't have an account?",
@@ -97,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
 
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                 ],
               ),
             ),

@@ -1,22 +1,66 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_graduation_project/common/widgets/main_navigation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_graduation_project/core/theme/app_theme.dart';
-import 'package:flutter_graduation_project/features/movie_details_1/ui/veiw/movie_details_screen.dart';
+import 'package:flutter_graduation_project/features/login/ui/view/login_screen.dart';
+import 'package:flutter_graduation_project/features/register/ui/view/register_screen.dart';
+
+import 'core/api/dio_consumer.dart';
+import 'core/api/api_consumer.dart';
+
+import 'features/auth/data/datasources/auth_remote_datasource.dart';
+import 'features/auth/data/repository/auth_repository_impl.dart';
+import 'features/auth/logic/auth_cubit.dart';
+
+
 
 void main() {
-  runApp(const MyApp());
+  // 1) إنشاء Dio
+  final dio = Dio();
+
+  // 2) إنشاء ApiConsumer
+  final apiConsumer = DioConsumer(dio: dio);
+
+  // 3) إنشاء RemoteDataSource
+  final authRemoteDataSource = AuthRemoteDataSourceImpl(api: apiConsumer);
+
+  // 4) إنشاء Repository
+  final authRepository = AuthRepositoryImpl(
+    remoteDataSource: authRemoteDataSource,
+  );
+
+  runApp(MyApp(
+    authRepository: authRepository,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AuthRepositoryImpl authRepository;
+
+  const MyApp({super.key, required this.authRepository});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Beg',
-      theme: AppTheme.theme,
-      home: MainNavigation(),
+    return MultiBlocProvider(
+      providers: [
+        // 5) AuthCubit
+        BlocProvider(
+          create: (_) => AuthCubit(authRepository),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.theme,
+        home: LoginScreen(), // كبداية
+      ),
     );
   }
 }
+
+
+
+
+
+      // debugShowCheckedModeBanner: false,
+      // title: 'Flutter Beg',
+      // theme: AppTheme.theme,
