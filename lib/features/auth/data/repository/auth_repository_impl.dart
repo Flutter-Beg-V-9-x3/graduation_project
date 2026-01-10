@@ -28,7 +28,7 @@ class AuthRepositoryImpl implements AuthRepository {
         passwordConfirmation: passwordConfirmation,
       );
 
-      // response شكلها: [ { data: {...}, message: "" }, 201 ]
+      // response   : [ { data: {...}, message: "" }, 201 ]
       final List<dynamic> responseList = response as List<dynamic>;
       final Map<String, dynamic> body = responseList[0] as Map<String, dynamic>;
       final Map<String, dynamic> data = body["data"] ?? {};
@@ -54,7 +54,7 @@ class AuthRepositoryImpl implements AuthRepository {
         password: password,
       );
 
-      // response شكلها: [ { data: { user: {...}, token: "..." }, message: "" }, 200 ]
+      // response   : [ { data: { user: {...}, token: "..." }, message: "" }, 200 ]
       final List<dynamic> responseList = response as List<dynamic>;
       final Map<String, dynamic> body = responseList[0] as Map<String, dynamic>;
       final Map<String, dynamic> data = body["data"] ?? {};

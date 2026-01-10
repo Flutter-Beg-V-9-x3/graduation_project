@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_graduation_project/common/widgets/divider.dart';
 import 'package:flutter_graduation_project/common/widgets/main_navigation.dart';
 import 'package:flutter_graduation_project/common/widgets/social_sing_up.dart';
-import 'package:flutter_graduation_project/core/theme/app_colors.dart';
-import 'package:flutter_graduation_project/features/home/ui/view/home_screen.dart';
 import 'package:flutter_graduation_project/features/login/ui/widget/custom_button.dart';
 import 'package:flutter_graduation_project/features/login/ui/widget/login_form.dart';
 import 'package:flutter_graduation_project/features/login/ui/widget/login_header.dart';
@@ -12,7 +10,6 @@ import 'package:flutter_graduation_project/features/login/ui/widget/recovery_pas
 import 'package:flutter_graduation_project/features/login/ui/widget/welcome_back.dart';
 import 'package:flutter_graduation_project/features/register/ui/view/register_screen.dart';
 import 'package:flutter_graduation_project/features/register/ui/widget/auth_switch_text.dart';
-
 import 'package:flutter_graduation_project/features/auth/logic/auth_cubit.dart';
 import 'package:flutter_graduation_project/features/auth/logic/auth_state.dart';
 
@@ -53,14 +50,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      RecoveryPassword(),
-                    ],
+                    children: const [RecoveryPassword()],
                   ),
 
                   const SizedBox(height: 18),
 
-                  /// ---------------- BlocConsumer هنا ---------------- ///
+                  /// ---------------- BlocConsumer ---------------- ///
                   BlocConsumer<AuthCubit, AuthState>(
                     listener: (context, state) {
                       if (state is AuthError) {
@@ -72,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                       }
 
-                      if (state is AuthSuccess) {
+                      if (state is LoginSuccess) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text("Logged in successfully!"),
@@ -80,8 +75,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         );
 
-                        // الانتقال للصفحة التالية
-                        // TODO: غيرها لصفحة الهوم لاحقًا
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -97,22 +90,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: CustomButton(
                           formKey: _formKey,
                           text: state is AuthLoading ? "Loading..." : "Log In",
-                          showDefaultMessages: false,
                           onPressedAsync: () async {
                             if (_formKey.currentState!.validate()) {
                               context.read<AuthCubit>().login(
-                                    email: emailController.text.trim(),
-                                    password: passwordController.text.trim(),
-                                  );
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                              );
                             }
-                            return false;
                           },
                         ),
                       );
                     },
                   ),
-                  /// -------------------------------------------------- ///
 
+                  /// -------------------------------------------------- ///
                   const SizedBox(height: 16),
 
                   const OrDivider(),

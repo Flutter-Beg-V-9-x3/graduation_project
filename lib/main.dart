@@ -2,36 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_graduation_project/core/theme/app_theme.dart';
-import 'package:flutter_graduation_project/features/login/ui/view/login_screen.dart';
-import 'package:flutter_graduation_project/features/register/ui/view/register_screen.dart';
-
+import 'package:flutter_graduation_project/features/Splash/splash_screen.dart';
 import 'core/api/dio_consumer.dart';
-import 'core/api/api_consumer.dart';
-
 import 'features/auth/data/datasources/auth_remote_datasource.dart';
 import 'features/auth/data/repository/auth_repository_impl.dart';
 import 'features/auth/logic/auth_cubit.dart';
 
-
-
 void main() {
-  // 1) إنشاء Dio
+  // 1)  Dio
   final dio = Dio();
 
-  // 2) إنشاء ApiConsumer
+  // 2)  ApiConsumer
   final apiConsumer = DioConsumer(dio: dio);
 
-  // 3) إنشاء RemoteDataSource
+  // 3)  RemoteDataSource
   final authRemoteDataSource = AuthRemoteDataSourceImpl(api: apiConsumer);
 
-  // 4) إنشاء Repository
+  // 4)  Repository
   final authRepository = AuthRepositoryImpl(
     remoteDataSource: authRemoteDataSource,
   );
 
-  runApp(MyApp(
-    authRepository: authRepository,
-  ));
+  runApp(MyApp(authRepository: authRepository));
 }
 
 class MyApp extends StatelessWidget {
@@ -44,23 +36,13 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         // 5) AuthCubit
-        BlocProvider(
-          create: (_) => AuthCubit(authRepository),
-        ),
+        BlocProvider(create: (_) => AuthCubit(authRepository)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme,
-        home: LoginScreen(), // كبداية
+        home: SplashScreen(),
       ),
     );
   }
 }
-
-
-
-
-
-      // debugShowCheckedModeBanner: false,
-      // title: 'Flutter Beg',
-      // theme: AppTheme.theme,

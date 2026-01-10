@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatefulWidget {
   final GlobalKey<FormState> formKey;
   final String text;
-  final Future<bool> Function() onPressedAsync;
-  final bool showDefaultMessages;
+  final Future<void> Function() onPressedAsync;
 
   const CustomButton({
     super.key,
     required this.formKey,
     required this.text,
     required this.onPressedAsync,
-    this.showDefaultMessages = true,
   });
 
   @override
@@ -30,21 +28,9 @@ class _CustomButtonState extends State<CustomButton> {
               if (widget.formKey.currentState!.validate()) {
                 setState(() => isLoading = true);
 
-                bool success = await widget.onPressedAsync();
+                await widget.onPressedAsync();
 
                 setState(() => isLoading = false);
-
-                if (widget.showDefaultMessages) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        success ? "Login Successful" : "Login Failed",
-                      ),
-                      backgroundColor: success ? Colors.green : Colors.red,
-                      duration: const Duration(seconds: 2),
-                    ),
-                  );
-                }
               }
             },
       style: ElevatedButton.styleFrom(

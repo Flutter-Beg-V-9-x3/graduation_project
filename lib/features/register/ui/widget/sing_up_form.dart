@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_graduation_project/core/theme/app_text_styles.dart';
 import 'package:flutter_graduation_project/features/auth/logic/auth_cubit.dart';
 import 'package:flutter_graduation_project/features/auth/logic/auth_state.dart';
+import 'package:flutter_graduation_project/features/login/ui/widget/custom_button.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
@@ -35,29 +36,26 @@ class _SignUpFormState extends State<SignUpForm> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is AuthLoading) {
-          // يمكن عرض لودينغ هنا لو أردت
-        }
+        if (state is AuthLoading) {}
 
         if (state is AuthError) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.red,
-            ),
+            SnackBar(content: Text(state.message), backgroundColor: Colors.red),
           );
         }
 
-        if (state is AuthSuccess) {
+        if (state is RegisterSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text("Account created successfully!"),
+              content: Text("Account created successfully! Please log in."),
               backgroundColor: Colors.green,
+              duration: Duration(seconds: 2),
             ),
           );
 
-          // الانتقال بعد النجاح
-          Navigator.pop(context); // يرجع لصفحة تسجيل الدخول
+          Future.delayed(const Duration(seconds: 2), () {
+            Navigator.pop(context);
+          });
         }
       },
       builder: (context, state) {
@@ -138,7 +136,9 @@ class _SignUpFormState extends State<SignUpForm> {
                   prefixIcon: const Icon(Icons.lock, color: Colors.white54),
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                      _obscurePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                       color: Colors.white54,
                     ),
                     onPressed: () {
@@ -176,7 +176,10 @@ class _SignUpFormState extends State<SignUpForm> {
                 decoration: InputDecoration(
                   hintText: '••••••••',
                   hintStyle: AppTextStyles.inputPlaceholder,
-                  prefixIcon: const Icon(Icons.lock_reset, color: Colors.white54),
+                  prefixIcon: const Icon(
+                    Icons.lock_reset,
+                    color: Colors.white54,
+                  ),
                   suffixIcon: IconButton(
                     icon: Icon(
                       _obscureConfirmPassword
@@ -210,26 +213,24 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
               const SizedBox(height: 32),
 
-              // زر التسجيل
+              //rigister Button
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: state is AuthLoading
-                      ? null
-                      : () {
-                          if (_formKey.currentState!.validate()) {
-                            context.read<AuthCubit>().register(
-                                  name: _nameController.text.trim(),
-                                  email: _emailController.text.trim(),
-                                  password: _passwordController.text.trim(),
-                                  passwordConfirmation:
-                                      _confirmPasswordController.text.trim(),
-                                );
-                          }
-                        },
-                  child: state is AuthLoading
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text("Create Account"),
+                height: 50,
+                child: CustomButton(
+                  formKey: _formKey,
+                  text: state is AuthLoading ? "Loading..." : "Create Account",
+                  onPressedAsync: () async {
+                    if (_formKey.currentState!.validate()) {
+                      context.read<AuthCubit>().register(
+                        name: _nameController.text.trim(),
+                        email: _emailController.text.trim(),
+                        password: _passwordController.text.trim(),
+                        passwordConfirmation: _confirmPasswordController.text
+                            .trim(),
+                      );
+                    }
+                  },
                 ),
               ),
             ],

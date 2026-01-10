@@ -6,14 +6,14 @@ class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
 
-class AuthSuccess extends AuthState {
-  final UserModel user;
+class RegisterSuccess extends AuthState {}
 
-  AuthSuccess(this.user);
+class LoginSuccess extends AuthState {
+  final UserModel user;
+  LoginSuccess(this.user);
 }
 
 class AuthError extends AuthState {
   final String message;
-
   AuthError(this.message);
 }

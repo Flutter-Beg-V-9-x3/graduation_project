@@ -2,7 +2,7 @@ class UserModel {
   final String name;
   final String email;
   final String role;
-  final String? token; // token موجود في login فقط
+  final String? token;    
 
   UserModel({
     required this.name,
@@ -16,7 +16,7 @@ class UserModel {
       name: json["name"] ?? "",
       email: json["email"] ?? "",
       role: json["role"] ?? "",
-      token: json["token"], // ممكن تكون null في register
+      token: json["token"],
     );
   }
 }
