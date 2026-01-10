@@ -12,106 +12,73 @@ class HomeSearchBar extends StatefulWidget {
 class _HomeSearchBarState extends State<HomeSearchBar> {
   bool _isMainBoxHovered = false;
   bool _isFilterHovered = false;
-  bool _isFocused = false;
-  final FocusNode _focusNode = FocusNode();
-
-  @override
-  void initState() {
-    super.initState();
-    _focusNode.addListener(() {
-      setState(() => _isFocused = _focusNode.hasFocus);
-    });
-  }
-
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       child: MouseRegion(
         onEnter: (_) => setState(() => _isMainBoxHovered = true),
         onExit: (_) => setState(() => _isMainBoxHovered = false),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          height: 52,
+        child: Container(
+          height: 48,
           padding: const EdgeInsets.only(left: 16, right: 8),
           decoration: BoxDecoration(
-            color: const Color(0xFF251B2F),
+            color: AppColors.glassWhite5,
             borderRadius: BorderRadius.circular(14),
             border: Border.all(
-              color: _isFocused
-                  ? AppColors.primary
-                  : Colors.white.withOpacity(_isMainBoxHovered ? 0.12 : 0.06),
+              color: Colors.white.withOpacity(0.10),
               width: 1.0,
             ),
-
-            boxShadow: _isFocused
-                ? [
-                    BoxShadow(
-                      color: AppColors.primary.withOpacity(0.08),
-                      blurRadius: 12,
-                      spreadRadius: 1,
-                    ),
-                  ]
-                : [],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
           ),
           child: Row(
             children: [
               Icon(
-                Icons.search,
-                size: 22,
-                color: (_isFocused || _isMainBoxHovered)
-                    ? AppColors.primary
-                    : Colors.white.withOpacity(0.25),
+                Icons.search_rounded,
+                size: 27,
+                color: AppColors.textSecondary.withOpacity(0.9),
               ),
               const SizedBox(width: 12),
 
               Expanded(
-                child: TextField(
-                  focusNode: _focusNode,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14.5,
-                    fontFamily: 'Be Vietnam Pro',
-                  ),
-                  cursorColor: AppColors.primary,
-                  decoration: InputDecoration(
-                    hintText: "Search movies, actors...",
-                    hintStyle: TextStyle(
-                      color: Colors.white.withOpacity(0.2),
-                      fontSize: 14,
-                    ),
-                    border: InputBorder.none,
-                    isDense: true,
+                child: Text(
+                  "Search movies, actors...",
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.textSecondary.withOpacity(0.9),
+                    fontSize: 17,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 0.15,
+                    height: 1.2,
                   ),
                 ),
               ),
+
+              const SizedBox(width: 8),
 
               MouseRegion(
                 onEnter: (_) => setState(() => _isFilterHovered = true),
                 onExit: (_) => setState(() => _isFilterHovered = false),
                 cursor: SystemMouseCursors.click,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  width: 38,
-                  height: 38,
+                child: Container(
+                  width: 36,
+                  height: 36,
                   decoration: BoxDecoration(
                     color: _isFilterHovered
-                        ? Colors.white.withOpacity(0.05)
+                        ? Colors.white.withOpacity(0.15)
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Icon(
-                    Icons.tune,
-                    size: 19,
-                    color: _isFilterHovered
-                        ? AppColors.primary
-                        : Colors.white.withOpacity(0.4),
+                    Icons.tune_rounded,
+                    size: 28,
+                    color: AppColors.textSecondary.withOpacity(0.9),
                   ),
                 ),
               ),

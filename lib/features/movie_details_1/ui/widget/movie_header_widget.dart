@@ -53,7 +53,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
       width: double.infinity,
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/The Creator.jpg'),
+          image: AssetImage('assets/images/unnamed.png'),
           fit: BoxFit.cover,
         ),
       ),

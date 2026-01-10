@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import 'package:flutter_graduation_project/features/in_app_trailer_player/ui/view/trailer_player.dart';
 
 class ActionRatingSection extends StatefulWidget {
   const ActionRatingSection({super.key});
@@ -23,26 +24,48 @@ class _ActionRatingSectionState extends State<ActionRatingSection> {
               height: 48,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
+                color: AppColors.primary,
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primary.withOpacity(0.3),
-                    blurRadius: 15,
+                    color: AppColors.primaryShadow,
+                    blurRadius: 8,
                     offset: const Offset(0, 4),
                   ),
                 ],
               ),
-              child: OutlinedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.play_arrow_outlined, size: 22),
-                label: const Text("Watch Trailer"),
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: AppColors.primary, width: 1.5),
-                  foregroundColor: Colors.white,
-                  backgroundColor: AppColors.primary.withOpacity(0.1),
-                  textStyle: AppTextStyles.button.copyWith(fontSize: 14),
+              child: TextButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TrailerPlayer(
+                        videoUrl:
+                            'https://dn710206.ca.archive.org/0/items/batman-beyond-trailers-tv-promos-and-bumpers-collection/Batman%20Beyond%20Animated%20VHS%20Collection%20Trailer.mp4',
+                        posterUrl: 'assets/images/3.png',
+                      ),
+                    ),
+                  );
+                },
+                icon: const Icon(
+                  Icons.play_arrow_rounded,
+                  size: 24,
+                  color: AppColors.textPrimary,
+                ),
+                label: Text(
+                  "Watch Trailer",
+                  style: AppTextStyles.button.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  foregroundColor: AppColors.textPrimary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                 ),
               ),
             ),
@@ -60,26 +83,24 @@ class _ActionRatingSectionState extends State<ActionRatingSection> {
                 height: 48,
                 width: 48,
                 decoration: BoxDecoration(
-                  // يتغير اللون عند تمرير الماوس ليصبح "Full"
                   color: isBookmarkHovered
-                      ? Colors.white
+                      ? AppColors.textPrimary
                       : AppColors.surfaceAlt,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
                     color: isBookmarkHovered
-                        ? Colors.white
-                        : Colors.white.withOpacity(0.1),
+                        ? AppColors.textPrimary
+                        : AppColors.borderWhite5,
                     width: 1,
                   ),
                 ),
                 child: Icon(
-                  // تتغير الأيقونة عند التمرير لتظهر الإشارة والزائد
                   isBookmarkHovered
                       ? Icons.bookmark_add
                       : Icons.bookmark_add_outlined,
                   color: isBookmarkHovered
                       ? AppColors.background
-                      : Colors.white,
+                      : AppColors.textPrimary,
                   size: 22,
                 ),
               ),
