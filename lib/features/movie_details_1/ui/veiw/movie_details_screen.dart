@@ -4,6 +4,10 @@ import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/mo
 import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_cast_section.dart.dart';
 import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_header_widget.dart';
 import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_reviews_widget.dart';
+import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_rating_section.dart';
+import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_synopsis_section.dart';
+import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_reviews_header_section.dart';
+import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/other_reviews_section.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   const MovieDetailsScreen({super.key});
@@ -15,14 +19,21 @@ class MovieDetailsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HeaderWidget(), // القسم 1
+            HeaderWidget(),
             const SizedBox(height: 10),
-            ActionRatingSection(), // القسم 2
+            ActionRatingSection(),
             const SizedBox(height: 20),
-            SynopsisCastSection(), // القسم 3
+            MovieRatingSection(),
+            const SizedBox(height: 20),
+            MovieSynopsisSection(),
+            const SizedBox(height: 20),
+            SynopsisCastSection(),
             const SizedBox(height: 30),
-            ReviewsSection(), // القسم 4
-            const SizedBox(height: 40),
+            MovieReviewsHeaderSection(),
+            const SizedBox(height: 20),
+            ReviewsSection(),
+            const SizedBox(height: 20),
+            OtherReviewsSection(),
           ],
         ),
       ),
