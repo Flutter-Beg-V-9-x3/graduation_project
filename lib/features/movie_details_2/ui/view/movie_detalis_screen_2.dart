@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_graduation_project/features/movie_details_2/ui/widget/movie_details_header.dart';
 import 'package:flutter_graduation_project/features/movie_details_2/ui/widget/movie_info_card.dart';
 
-class MovieDetailsScreen2 extends StatefulWidget {
-  const MovieDetailsScreen2({super.key});
+class MovieDetailsScreen_2 extends StatefulWidget {
+  const MovieDetailsScreen_2({super.key});
 
   @override
-  State<MovieDetailsScreen2> createState() => _MovieDetailsScreen2State();
+  State<MovieDetailsScreen_2> createState() => _MovieDetailsScreen_2State();
 }
 
-class _MovieDetailsScreen2State extends State<MovieDetailsScreen2> {
+class _MovieDetailsScreen_2State extends State<MovieDetailsScreen_2> {
   void _onBackOrCancel() {
     Navigator.pop(context);
   }
