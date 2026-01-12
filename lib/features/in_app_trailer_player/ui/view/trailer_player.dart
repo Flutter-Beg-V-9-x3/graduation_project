@@ -32,6 +32,7 @@ class _TrailerPlayerState extends State<TrailerPlayer> {
   void initState() {
     super.initState();
 
+    // ignore: deprecated_member_use
     _controller = VideoPlayerController.network(widget.videoUrl)
       ..initialize().then((_) {
         setState(() {});
