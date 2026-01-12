@@ -15,7 +15,7 @@ class TrendingSection extends StatelessWidget {
       "title": "Oppenheimer",
       "genre": "Drama, History",
       "rating": "9.1",
-      "image": "assets/images/oppenheimer.jpg",
+      "image": "assets/images/Oppenheimer.jpg",
     },
     {
       "title": "Barbie",

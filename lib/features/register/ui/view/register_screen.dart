@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_graduation_project/common/widgets/divider.dart';
 import 'package:flutter_graduation_project/common/widgets/social_sing_up.dart';
 import 'package:flutter_graduation_project/features/register/ui/widget/already_have_account.dart';
+import 'package:flutter_graduation_project/features/register/ui/widget/auth_switch_text.dart';
 import 'package:flutter_graduation_project/features/register/ui/widget/create_account_section.dart';
 import 'package:flutter_graduation_project/features/register/ui/widget/sing_up_form.dart';
 
@@ -29,8 +30,12 @@ class RegisterScreen extends StatelessWidget {
                 const SizedBox(height: 60),
                 SocialSignUpButtons(),
                 const SizedBox(height: 20),
-                AlreadyHaveAccount(
-                  onTapLogin: () => (context),
+                AuthSwitchText(
+                  normalText: "Already have an account?",
+                  buttonText: "Log in",
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ],
             ),

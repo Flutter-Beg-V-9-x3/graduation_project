@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_graduation_project/common/widgets/divider.dart';
+import 'package:flutter_graduation_project/common/widgets/social_sing_up.dart';
 import 'package:flutter_graduation_project/core/theme/app_colors.dart';
-import 'package:flutter_graduation_project/core/theme/app_text_styles.dart';
 import 'package:flutter_graduation_project/features/login/ui/widget/custom_button.dart';
+import 'package:flutter_graduation_project/features/login/ui/widget/login_form.dart';
 import 'package:flutter_graduation_project/features/login/ui/widget/login_header.dart';
 import 'package:flutter_graduation_project/features/login/ui/widget/recovery_password.dart';
 import 'package:flutter_graduation_project/features/login/ui/widget/welcome_back.dart';
+import 'package:flutter_graduation_project/features/register/ui/view/register_screen.dart';
+import 'package:flutter_graduation_project/features/register/ui/widget/auth_switch_text.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,8 +18,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _obscurePassword = true;
-
   final _formKey = GlobalKey<FormState>();
 
   final emailController = TextEditingController();
@@ -38,91 +40,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   SizedBox(height: 8),
                   welcome_back(),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 24),
-
-                        const Text('Email Address', style: AppTextStyles.label),
-                        const SizedBox(height: 12),
-
-                        TextFormField(
-                          controller: emailController,
-                          decoration: InputDecoration(
-                            hintText: "name@example.com",
-                            prefixIcon: const Icon(Icons.mail_outline),
-                            filled: true,
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 16,
-                              horizontal: 16,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Email is required';
-                            }
-                            return null;
-                          },
-                        ),
-
-                        const SizedBox(height: 18),
-
-                        const Text('Password', style: AppTextStyles.label),
-                        const SizedBox(height: 12),
-                        TextFormField(
-                          controller: passwordController,
-                          obscureText: _obscurePassword,
-                          decoration: InputDecoration(
-                            hintText: "Enter your password",
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                size: 24,
-                                _obscurePassword
-                                    ? Icons.visibility_off_outlined
-                                    : Icons.visibility_outlined,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _obscurePassword = !_obscurePassword;
-                                });
-                              },
-                            ),
-                            filled: true,
-                            prefixIcon: Icon(Icons.lock_outline),
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 16,
-                              horizontal: 16,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Password required';
-                            }
-                            if (value.length < 6) {
-                              return 'Minimum 6 characters';
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                    ),
+                  LoginForm(
+                    formKey: _formKey,
+                    emailController: emailController,
+                    passwordController: passwordController,
                   ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [RecoveryPassword()],
                   ),
-                  
+
                   const SizedBox(height: 18),
 
                   SizedBox(
@@ -146,6 +74,30 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                   ),
+                  SizedBox(height: 16),
+
+                  OrDivider(),
+
+                  SizedBox(height: 16),
+
+                  SocialSignUpButtons(),
+
+                  SizedBox(height: 16),
+
+                  AuthSwitchText(
+                    normalText: "Don't have an account?",
+                    buttonText: "Sign Up",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const RegisterScreen(),
+                        ),
+                      );
+                    },
+                  ),
+
+                  SizedBox(height: 16),
                 ],
               ),
             ),
