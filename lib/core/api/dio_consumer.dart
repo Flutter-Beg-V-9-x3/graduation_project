@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_graduation_project/core/api/interceptors/logging_interceptor.dart';
+import 'package:flutter_graduation_project/core/api/interceptors/token_interceptor.dart';
 import 'api_consumer.dart';
 
 
@@ -16,6 +17,7 @@ class DioConsumer implements ApiConsumer {
       };
 
     dio.interceptors.add(LoggingInterceptor());
+    dio.interceptors.add(TokenInterceptor());
   }
 
   @override
