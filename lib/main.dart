@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_graduation_project/core/navigation/navigation_manager.dart';
 import 'package:flutter_graduation_project/core/theme/app_theme.dart';
 import 'package:flutter_graduation_project/features/Splash/ui/view/splash_screen.dart';
 import 'core/api/dio_consumer.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => AuthCubit(authRepository)),
       ],
       child: MaterialApp(
+        navigatorKey: NavigationManager.navigatorKey,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme,
         home: SplashScreen(),
