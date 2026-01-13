@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_graduation_project/core/theme/app_theme.dart';
 import 'package:flutter_graduation_project/features/Splash/ui/view/splash_screen.dart';
+import 'package:flutter_graduation_project/features/home/ui/view/home_screen.dart';
 import 'core/api/dio_consumer.dart';
 import 'features/auth/data/datasources/auth_remote_datasource.dart';
 import 'features/auth/data/repository/auth_repository_impl.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppTheme.theme,
-        home: SplashScreen(),
+        home: HomeScreen(),
       ),
     );
   }

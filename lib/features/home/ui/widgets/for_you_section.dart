@@ -1,7 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_graduation_project/features/movies/logic/movie_cubit.dart';
+import 'package:flutter_graduation_project/features/movies/logic/movie_state.dart';
+import 'package:flutter_graduation_project/features/movies/data/models/movie_model.dart';
 
 class ForYouSection extends StatelessWidget {
   const ForYouSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MovieCubit, MovieState>(
+      builder: (context, state) {
+        if (state is MoviesLoaded) {
+          final forYouMovies = state.movies.take(4).toList();
+          return _ForYouContent(movies: forYouMovies);
+        } else if (state is MovieError) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Center(
+              child: Text(
+                "Error: ${state.message}",
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          );
+        } else if (state is MovieLoading) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Center(child: CircularProgressIndicator()),
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+}
+
+class _ForYouContent extends StatelessWidget {
+  final List<MovieModel> movies;
+
+  const _ForYouContent({required this.movies});
 
   @override
   Widget build(BuildContext context) {
@@ -28,34 +67,10 @@ class ForYouSection extends StatelessWidget {
           crossAxisSpacing: 16,
           mainAxisSpacing: 20,
           childAspectRatio: 0.68,
-          children: const [
-            _PosterCard(
-              title: "Dune: Part Two",
-              rating: "8.8",
-              year: "2024",
-              badge: "98% Match",
-              imagePath: "assets/images/Dune Part Two .jpg", //
-            ),
-            _PosterCard(
-              title: "Civil War",
-              rating: "7.6",
-              year: "2024",
-              imagePath: "assets/images/Civil War.jpg", //
-            ),
-            _PosterCard(
-              title: "Poor Things",
-              rating: "8.4",
-              year: "2023",
-              imagePath: "assets/images/Poor Things.jpg", //
-            ),
-            _PosterCard(
-              title: "The Creator",
-              rating: "6.9",
-              year: "2023",
-              badge: "New",
-              imagePath: "assets/images/The Creator.jpg", //
-            ),
-          ],
+          children: List.generate(movies.length, (index) {
+            final movie = movies[index];
+            return _PosterCard(movie: movie, index: index);
+          }),
         ),
       ],
     );
@@ -63,19 +78,10 @@ class ForYouSection extends StatelessWidget {
 }
 
 class _PosterCard extends StatefulWidget {
-  final String title;
-  final String rating;
-  final String year;
-  final String imagePath; //
-  final String? badge;
+  final MovieModel movie;
+  final int index;
 
-  const _PosterCard({
-    required this.title,
-    required this.rating,
-    required this.year,
-    required this.imagePath,
-    this.badge,
-  });
+  const _PosterCard({required this.movie, required this.index});
 
   @override
   State<_PosterCard> createState() => _PosterCardState();
@@ -83,6 +89,32 @@ class _PosterCard extends StatefulWidget {
 
 class _PosterCardState extends State<_PosterCard> {
   bool _isHovered = false;
+
+  String get _fixedRating {
+    switch (widget.index) {
+      case 0:
+        return "8.8";
+      case 1:
+        return "7.6";
+      case 2:
+        return "8.4";
+      case 3:
+        return "6.9";
+      default:
+        return "8.0";
+    }
+  }
+
+  String? get _badgeText {
+    switch (widget.index) {
+      case 0:
+        return "98% Match";
+      case 3:
+        return "New";
+      default:
+        return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,11 +133,19 @@ class _PosterCardState extends State<_PosterCard> {
                   AnimatedScale(
                     scale: _isHovered ? 1.1 : 1.0,
                     duration: const Duration(milliseconds: 300),
-                    child: Image.asset(
-                      widget.imagePath,
+                    child: Image.network(
+                      widget.movie.posterUrl,
                       width: double.infinity,
                       height: double.infinity,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: Colors.grey[800],
+                          child: const Center(
+                            child: Icon(Icons.movie, color: Colors.grey),
+                          ),
+                        );
+                      },
                     ),
                   ),
 
@@ -131,7 +171,7 @@ class _PosterCardState extends State<_PosterCard> {
                     ),
                   ),
 
-                  if (widget.badge != null)
+                  if (_badgeText != null)
                     Positioned(
                       top: 10,
                       left: 10,
@@ -145,7 +185,7 @@ class _PosterCardState extends State<_PosterCard> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          widget.badge!,
+                          _badgeText!,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 10,
@@ -161,7 +201,7 @@ class _PosterCardState extends State<_PosterCard> {
         ),
         const SizedBox(height: 10),
         Text(
-          widget.title,
+          widget.movie.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: const TextStyle(
@@ -176,7 +216,7 @@ class _PosterCardState extends State<_PosterCard> {
             const Icon(Icons.star_rounded, color: Colors.amber, size: 16),
             const SizedBox(width: 4),
             Text(
-              widget.rating,
+              _fixedRating,
               style: TextStyle(
                 color: Colors.grey[400],
                 fontSize: 12,
@@ -187,7 +227,7 @@ class _PosterCardState extends State<_PosterCard> {
             Text("•", style: TextStyle(color: Colors.grey[600], fontSize: 12)),
             const SizedBox(width: 6),
             Text(
-              widget.year,
+              widget.movie.year.toString(),
               style: TextStyle(color: Colors.grey[600], fontSize: 12),
             ),
           ],

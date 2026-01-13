@@ -1,35 +1,47 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_graduation_project/features/movies/logic/movie_cubit.dart';
+import 'package:flutter_graduation_project/features/movies/logic/movie_state.dart';
+import 'package:flutter_graduation_project/features/movies/data/models/movie_model.dart';
 
 class TrendingSection extends StatelessWidget {
   const TrendingSection({super.key});
 
-  final List<Map<String, String>> movieData = const [
-    {
-      "title": "Dune: Part Two",
-      "genre": "Sci-Fi, Adventure",
-      "rating": "8.8",
-      "image": "assets/images/DuneTwo.jpg",
-    },
-    {
-      "title": "Oppenheimer",
-      "genre": "Drama, History",
-      "rating": "9.1",
-      "image": "assets/images/Oppenheimer.jpg",
-    },
-    {
-      "title": "Barbie",
-      "genre": "Comedy, Fantasy",
-      "rating": "7.9",
-      "image": "assets/images/Barbie.jpg",
-    },
-    {
-      "title": "The Batman",
-      "genre": "Action, Crime",
-      "rating": "8.3",
-      "image": "assets/images/the batman.jpg",
-    },
-  ];
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MovieCubit, MovieState>(
+      builder: (context, state) {
+        if (state is MoviesLoaded) {
+          final trendingMovies = state.movies.take(5).toList();
+          return _TrendingContent(movies: trendingMovies);
+        } else if (state is MovieError) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Center(
+              child: Text(
+                "Error: ${state.message}",
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          );
+        } else if (state is MovieLoading) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Center(child: CircularProgressIndicator()),
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
+    );
+  }
+}
+
+class _TrendingContent extends StatelessWidget {
+  final List<MovieModel> movies;
+
+  const _TrendingContent({required this.movies});
 
   @override
   Widget build(BuildContext context) {
@@ -61,13 +73,9 @@ class TrendingSection extends StatelessWidget {
             padding: const EdgeInsets.only(left: 20),
             clipBehavior: Clip.none,
             physics: const BouncingScrollPhysics(),
-            itemCount: movieData.length,
-            itemBuilder: (context, index) => _TrendingCard(
-              title: movieData[index]["title"]!,
-              genre: movieData[index]["genre"]!,
-              rating: movieData[index]["rating"]!,
-              imagePath: movieData[index]["image"]!,
-            ),
+            itemCount: movies.length,
+            itemBuilder: (context, index) =>
+                _TrendingCard(movie: movies[index]),
           ),
         ),
       ],
@@ -76,17 +84,9 @@ class TrendingSection extends StatelessWidget {
 }
 
 class _TrendingCard extends StatelessWidget {
-  final String title;
-  final String genre;
-  final String rating;
-  final String imagePath;
+  final MovieModel movie;
 
-  const _TrendingCard({
-    required this.title,
-    required this.genre,
-    required this.rating,
-    required this.imagePath,
-  });
+  const _TrendingCard({required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -96,10 +96,10 @@ class _TrendingCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _MoviePoster(rating: rating, imagePath: imagePath),
+          _MoviePoster(rating: "8.5", imageUrl: movie.posterUrl),
           const SizedBox(height: 12),
           Text(
-            title,
+            movie.title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
@@ -110,7 +110,7 @@ class _TrendingCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            genre,
+            movie.genreName,
             maxLines: 1,
             style: TextStyle(
               color: Colors.white.withOpacity(0.5),
@@ -125,8 +125,9 @@ class _TrendingCard extends StatelessWidget {
 
 class _MoviePoster extends StatefulWidget {
   final String rating;
-  final String imagePath;
-  const _MoviePoster({required this.rating, required this.imagePath});
+  final String imageUrl;
+
+  const _MoviePoster({required this.rating, required this.imageUrl});
 
   @override
   State<_MoviePoster> createState() => _MoviePosterState();
@@ -165,7 +166,18 @@ class _MoviePosterState extends State<_MoviePoster> {
                 Positioned.fill(
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(16),
-                    child: Image.asset(widget.imagePath, fit: BoxFit.cover),
+                    child: Image.network(
+                      widget.imageUrl,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          color: Colors.grey[800],
+                          child: const Center(
+                            child: Icon(Icons.movie, color: Colors.grey),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 Positioned(
