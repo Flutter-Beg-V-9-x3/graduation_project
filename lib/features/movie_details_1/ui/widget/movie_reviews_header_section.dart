@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_graduation_project/core/navigation/navigation_manager.dart';
+import 'package:flutter_graduation_project/features/movie_review/ui/view/review_screen.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
@@ -33,7 +35,11 @@ class MovieReviewsHeaderSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
-                onTap: () {},
+
+                onTap: () {
+                 NavigationManager.push(const ReviewScreen());
+                },
+
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(

@@ -7,6 +7,7 @@ import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/mo
 import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_rating_section.dart';
 import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_synopsis_section.dart';
 import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_reviews_header_section.dart';
+import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/other_review_item.dart';
 import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/other_reviews_section.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
@@ -31,9 +32,29 @@ class MovieDetailsScreen extends StatelessWidget {
             const SizedBox(height: 30),
             MovieReviewsHeaderSection(),
             const SizedBox(height: 20),
-            ReviewsSection(),
+            ReviewItem(
+              username: "Ahmad",
+              date: "Jan 13, 2026",
+              rating: 3,
+              reviewText: "One of the best sci‑fi movies ever.",
+              likeCount: 42,
+              isOwner: true,
+              onLike: () => print("Liked"),
+              onEdit: () => print("Edit pressed"),
+              onDelete: () => print("Delete pressed"),
+            ),
+
             const SizedBox(height: 20),
-            OtherReviewsSection(),
+          //  OtherReviewsSection(),
+            OtherReviewItem(
+              initials: 'JD',
+              name: 'John Doe',
+              timeAgo: '2 days ago',
+              reviewText:
+                  'Christopher Nolan does it again. The docking scene is perhaps the most tense sequence in cinema history.',
+              starCount: 3,
+              circleColor: AppColors.textBlue,
+            ),
           ],
         ),
       ),

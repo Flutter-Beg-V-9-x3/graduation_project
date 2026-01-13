@@ -2,24 +2,36 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
-class ReviewsSection extends StatefulWidget {
-  const ReviewsSection({super.key});
+class ReviewItem extends StatelessWidget {
+  final String username;
+  final String date;
+  final int rating;
+  final String reviewText;
+  final int likeCount;
 
-  @override
-  State<ReviewsSection> createState() => _ReviewsSectionState();
-}
+  final VoidCallback? onLike;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
 
-class _ReviewsSectionState extends State<ReviewsSection> {
-  bool isLikeHovered = false;
-  bool isEditHovered = false;
-  bool isDeleteHovered = false;
-  bool isOptionsHovered = false;
-  int likeCount = 24;
+  final bool isOwner;
+
+  const ReviewItem({
+    super.key,
+    required this.username,
+    required this.date,
+    required this.rating,
+    required this.reviewText,
+    required this.likeCount,
+    this.onLike,
+    this.onEdit,
+    this.onDelete,
+    this.isOwner = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 32, vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.primary.withOpacity(0.1),
@@ -29,71 +41,45 @@ class _ReviewsSectionState extends State<ReviewsSection> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Header
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 46,
-                height: 46,
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.2),
-                  shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.primary.withOpacity(0.4)),
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  "You",
-                  style: AppTextStyles.labelSemiBold.copyWith(
-                    color: AppColors.primary,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
+              _buildAvatar(username),
               const SizedBox(width: 12),
+
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Your Review",
-                      style: AppTextStyles.reviewUsername.copyWith(
-                        fontSize: 16,
-                      ),
+                      username,
+                      style: AppTextStyles.reviewUsername.copyWith(fontSize: 16),
                     ),
                     const SizedBox(height: 4),
                     Row(
                       children: [
-                        _buildStars(),
+                        _buildStars(rating),
                         const SizedBox(width: 8),
-
                         Text(
-                          "Oct 24, 2023",
-                          style: AppTextStyles.reviewDate.copyWith(
-                            fontSize: 12,
-                          ),
+                          date,
+                          style: AppTextStyles.reviewDate.copyWith(fontSize: 12),
                         ),
                       ],
                     ),
                   ],
                 ),
               ),
-              MouseRegion(
-                onEnter: (_) => setState(() => isOptionsHovered = true),
-                onExit: (_) => setState(() => isOptionsHovered = false),
-                child: Icon(
-                  Icons.more_horiz,
-                  color: isOptionsHovered ? Colors.white : AppColors.textMuted,
-                  size: 22,
-                ),
-              ),
+
+              Icon(Icons.more_horiz, color: AppColors.textMuted, size: 22),
             ],
           ),
 
           const SizedBox(height: 16),
 
-          // 2. Review Content
+          // Review Content
           Text(
-            "Absolutely mind-blowing visuals and a soundtrack that stays with you for days. While the physics can be dense, the emotional core of the father-daughter relationship grounds it perfectly. A masterpiece.",
+            reviewText,
             style: AppTextStyles.reviewContent.copyWith(
               color: Colors.white.withOpacity(0.9),
               height: 1.6,
@@ -104,30 +90,46 @@ class _ReviewsSectionState extends State<ReviewsSection> {
           Divider(color: AppColors.primary.withOpacity(0.1), thickness: 1),
           const SizedBox(height: 12),
 
-          // 3. Action Buttons
+          // Action Buttons
           Row(
             children: [
-              _buildLikeButton(),
+              GestureDetector(
+                onTap: onLike,
+                child: Row(
+                  children: [
+                    Icon(Icons.thumb_up_alt_outlined,
+                        size: 16, color: AppColors.textSecondary),
+                    const SizedBox(width: 6),
+                    Text(
+                      "$likeCount",
+                      style: AppTextStyles.captionSmall.copyWith(
+                        color: AppColors.textSecondary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
               const Spacer(),
-              _buildSmallActionButton(
-                label: "Edit",
-                icon: Icons.edit_outlined,
-                isHovered: isEditHovered,
-                baseColor: Colors.white.withOpacity(0.05),
-                activeColor: Colors.white.withOpacity(0.15),
-                textColor: Colors.white,
-                onHover: (v) => setState(() => isEditHovered = v),
-              ),
-              const SizedBox(width: 8),
-              _buildSmallActionButton(
-                label: "Delete",
-                icon: Icons.delete_outline,
-                isHovered: isDeleteHovered,
-                baseColor: AppColors.error.withOpacity(0.1),
-                activeColor: AppColors.error.withOpacity(0.2),
-                textColor: AppColors.textRed,
-                onHover: (v) => setState(() => isDeleteHovered = v),
-              ),
+
+              if (isOwner) ...[
+                _buildSmallActionButton(
+                  label: "Edit",
+                  icon: Icons.edit_outlined,
+                  color: Colors.white.withOpacity(0.1),
+                  textColor: Colors.white,
+                  onTap: onEdit,
+                ),
+                const SizedBox(width: 8),
+                _buildSmallActionButton(
+                  label: "Delete",
+                  icon: Icons.delete_outline,
+                  color: AppColors.error.withOpacity(0.15),
+                  textColor: AppColors.textRed,
+                  onTap: onDelete,
+                ),
+              ],
             ],
           ),
         ],
@@ -135,43 +137,35 @@ class _ReviewsSectionState extends State<ReviewsSection> {
     );
   }
 
-  Widget _buildLikeButton() {
-    return MouseRegion(
-      onEnter: (_) => setState(() => isLikeHovered = true),
-      onExit: (_) => setState(() => isLikeHovered = false),
-      child: GestureDetector(
-        onTap: () => setState(() => likeCount++),
-        child: Row(
-          children: [
-            Icon(
-              isLikeHovered ? Icons.thumb_up_alt : Icons.thumb_up_alt_outlined,
-              size: 16,
-              color: isLikeHovered
-                  ? AppColors.primary
-                  : AppColors.textSecondary,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              "$likeCount",
-              style: AppTextStyles.captionSmall.copyWith(
-                color: isLikeHovered
-                    ? AppColors.primary
-                    : AppColors.textSecondary,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+  Widget _buildAvatar(String username) {
+    return Container(
+      width: 46,
+      height: 46,
+      decoration: BoxDecoration(
+        color: AppColors.primary.withOpacity(0.2),
+        shape: BoxShape.circle,
+        border: Border.all(color: AppColors.primary.withOpacity(0.4)),
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        username.characters.first.toUpperCase(),
+        style: AppTextStyles.labelSemiBold.copyWith(
+          color: AppColors.primary,
+          fontSize: 14,
         ),
       ),
     );
   }
 
-  Widget _buildStars() {
+  Widget _buildStars(int rating) {
     return Row(
       children: List.generate(
         5,
-        (index) =>
-            const Icon(Icons.star_rounded, color: AppColors.primary, size: 14),
+        (i) => Icon(
+          Icons.star_rounded,
+          color: i < rating ? AppColors.primary : Colors.grey,
+          size: 14,
+        ),
       ),
     );
   }
@@ -179,37 +173,30 @@ class _ReviewsSectionState extends State<ReviewsSection> {
   Widget _buildSmallActionButton({
     required String label,
     required IconData icon,
-    required bool isHovered,
-    required Color baseColor,
-    required Color activeColor,
+    required Color color,
     required Color textColor,
-    required Function(bool) onHover,
+    required VoidCallback? onTap,
   }) {
-    return MouseRegion(
-      onEnter: (_) => onHover(true),
-      onExit: (_) => onHover(false),
-      child: GestureDetector(
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            color: isHovered ? activeColor : baseColor,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(icon, size: 14, color: textColor),
-              const SizedBox(width: 6),
-              Text(
-                label,
-                style: AppTextStyles.buttonSmallSemiBold.copyWith(
-                  color: textColor,
-                  fontSize: 12,
-                ),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: 14, color: textColor),
+            const SizedBox(width: 6),
+            Text(
+              label,
+              style: AppTextStyles.buttonSmallSemiBold.copyWith(
+                color: textColor,
+                fontSize: 12,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
