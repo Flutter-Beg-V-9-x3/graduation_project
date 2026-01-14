@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_graduation_project/features/movies/data/models/movie_details_model.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import 'other_review_item.dart';
 
 class OtherReviewsSection extends StatelessWidget {
-  const OtherReviewsSection({super.key});
+  const OtherReviewsSection({super.key, required  MovieDetailsModel movie});
 
   final List<Map<String, dynamic>> reviews = const [
     {

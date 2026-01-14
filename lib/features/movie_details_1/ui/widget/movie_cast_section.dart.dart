@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_graduation_project/features/movies/data/models/movie_details_model.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
 class SynopsisCastSection extends StatelessWidget {
-  const SynopsisCastSection({super.key});
+  const SynopsisCastSection({super.key, required  MovieDetailsModel movie});
 
   final List<Map<String, String>> castMembers = const [
-    {'name': 'Matthew McC.', 'image': 'assets/images/Matthew McC.jpg'},
-    {'name': 'Anne H.', 'image': 'assets/images/Anne H..jpg'},
-    {'name': 'Jessica C.', 'image': 'assets/images/Jessica C..jpg'},
-    {'name': 'Mackenzie F.', 'image': 'assets/images/Mackenzie F..jpg'},
+    {'name': 'Matthew McC.', 'image': 'assets/images/Matthew.jpg'},
+    {'name': 'Anne H.', 'image': 'assets/images/Anne.jpg'},
+    {'name': 'Jessica C.', 'image': 'assets/images/Jessica.jpg'},
+    {'name': 'Mackenzie F.', 'image': 'assets/images/Mackenzie.jpg'},
   ];
 
   @override
@@ -50,7 +51,7 @@ class SynopsisCastSection extends StatelessWidget {
           CircleAvatar(
             radius: 30,
             backgroundColor: AppColors.surface,
-            backgroundImage: NetworkImage(actor['image']!),
+            backgroundImage: AssetImage(actor['image']!),
           ),
           const SizedBox(height: 8),
 

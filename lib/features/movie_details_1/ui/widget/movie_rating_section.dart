@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_graduation_project/features/movies/data/models/movie_details_model.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
 class MovieRatingSection extends StatelessWidget {
-  const MovieRatingSection({super.key});
+  const MovieRatingSection({super.key, required  MovieDetailsModel movie});
 
   @override
   Widget build(BuildContext context) {
