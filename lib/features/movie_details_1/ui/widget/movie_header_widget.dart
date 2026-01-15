@@ -172,7 +172,6 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   }
 
   Widget _buildMovieInfoBadges() {
-    // تحويل المدة مباشرة هون (بدون دالة خارجية)
     String durationText = 'N/A';
     final minutes = widget.movie.duration;
     // ignore: unnecessary_null_comparison

@@ -19,7 +19,6 @@ class TrendingSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // العنوان + See all
         Padding(
           padding: EdgeInsets.symmetric(
             horizontal: isSmallScreen ? 16 : 24,
@@ -49,9 +48,8 @@ class TrendingSection extends StatelessWidget {
           ),
         ),
 
-        // القائمة الأفقية responsive
         SizedBox(
-          height: screenWidth * 0.75, // نسبة من العرض (تتكيف تلقائيًا)
+          height: screenWidth * 0.75,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.only(left: isSmallScreen ? 16 : 24),
@@ -79,7 +77,6 @@ class TrendingMovieCard extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        // عرض الكارد نسبي (حوالي 40-45% من عرض الشاشة)
         final cardWidth = screenWidth * (isSmallScreen ? 0.45 : 0.38);
 
         return GestureDetector(
@@ -93,9 +90,8 @@ class TrendingMovieCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // البوستر مع AspectRatio للحفاظ على النسبة
                   AspectRatio(
-                    aspectRatio: 2 / 3, // نسبة البوستر القياسية
+                    aspectRatio: 2 / 3,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(16),
                       child: Stack(
@@ -114,7 +110,6 @@ class TrendingMovieCard extends StatelessWidget {
                             ),
                           ),
 
-                          // نجمة التقييم في الزاوية
                           Positioned(
                             top: 8,
                             right: 8,
@@ -138,11 +133,7 @@ class TrendingMovieCard extends StatelessWidget {
                                   const SizedBox(width: 4),
                                   Text(
                                     "8.5",
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: AppTextStyles.buttonSmallSemiBold,
                                   ),
                                 ],
                               ),
@@ -155,29 +146,20 @@ class TrendingMovieCard extends StatelessWidget {
 
                   const SizedBox(height: 8),
 
-                  // العنوان
                   Text(
                     movie.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: AppTextStyles.movieTitle,
                   ),
 
                   const SizedBox(height: 4),
 
-                  // النوع
                   Text(
                     movie.genreName,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.6),
-                      fontSize: 12,
-                    ),
+                    style: AppTextStyles.movieInfo,
                   ),
                 ],
               ),
