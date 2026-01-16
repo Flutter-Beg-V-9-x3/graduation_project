@@ -187,7 +187,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
     }
 
     return Wrap(
-      spacing: 8,
+      spacing: 6,
       //  runSpacing: 10,
       alignment: WrapAlignment.center,
       children: [

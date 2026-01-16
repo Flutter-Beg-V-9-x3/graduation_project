@@ -26,9 +26,9 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 2));
 
     if (token != null && token.isNotEmpty) {
-      NavigationManager.pushReplacement(const LoginScreen());
+      NavigationManager.pushReplacement(const MainNavigation());
     } else {
-      NavigationManager.pushAndRemoveUntil(const MainNavigation());
+      NavigationManager.pushAndRemoveUntil(const LoginScreen());
     }
   }
 
