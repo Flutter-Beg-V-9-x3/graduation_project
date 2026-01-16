@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_graduation_project/features/movie_review/ui/view/review_screen.dart';
+import 'package:flutter_graduation_project/features/reviews/logic/review_cubit.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
 class MovieReviewsHeaderSection extends StatelessWidget {
-  const MovieReviewsHeaderSection({super.key});
+  final int movieId;
+  final String movieTitle;
+  final String moviePoster;
+  final String movieInfo;
+
+  const MovieReviewsHeaderSection({
+    super.key,
+    required this.movieId,
+    required this.movieTitle,
+    required this.moviePoster,
+    required this.movieInfo,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +28,7 @@ class MovieReviewsHeaderSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "Reviews (12k)",
+            "Reviews(12K)",
             style: AppTextStyles.sectionTitle.copyWith(
               fontSize: 22,
               fontWeight: FontWeight.w700,
@@ -33,7 +47,23 @@ class MovieReviewsHeaderSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               child: InkWell(
                 borderRadius: BorderRadius.circular(12),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => BlocProvider.value(
+                        value: context.read<ReviewCubit>(),
+                        child: ReviewScreen(
+                          movieId: movieId,
+                          movieTitle: movieTitle,
+                          moviePoster: moviePoster,
+                          movieInfo: movieInfo,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_graduation_project/core/api/interceptors/logging_interceptor.dart';
+import 'package:flutter_graduation_project/core/api/interceptors/token_interceptor.dart';
 
 import 'package:flutter_graduation_project/core/navigation/navigation_manager.dart';
 import 'package:flutter_graduation_project/core/theme/app_theme.dart';
@@ -20,8 +22,18 @@ import 'features/movies/data/repository/movie_repository.dart';
 import 'features/movies/logic/movie_cubit.dart';
 import 'features/movies/logic/movie_details_cubit.dart';
 
+// Reviews
+import 'features/reviews/data/datasource/review_remote_data_source.dart';
+import 'features/reviews/data/repository/review_repository.dart';
+import 'features/reviews/logic/review_cubit.dart';
+
 void main() {
   final dio = Dio();
+
+  // Interceptors
+  dio.interceptors.add(LoggingInterceptor());
+  dio.interceptors.add(TokenInterceptor());
+
   final apiConsumer = DioConsumer(dio: dio);
 
   // -------------------------
@@ -36,10 +48,17 @@ void main() {
   final movieRemoteDataSource = MovieRemoteDataSourceImpl(apiConsumer);
   final movieRepository = MovieRepository(movieRemoteDataSource);
 
+  // -------------------------
+  // Reviews Dependencies
+  // -------------------------
+  final reviewRemoteDataSource = ReviewRemoteDataSourceImpl(apiConsumer);
+  final reviewRepository = ReviewRepository(reviewRemoteDataSource);
+
   runApp(
     MyApp(
       authRepository: authRepository,
       movieRepository: movieRepository,
+      reviewRepository: reviewRepository,
     ),
   );
 }
@@ -47,11 +66,13 @@ void main() {
 class MyApp extends StatelessWidget {
   final AuthRepositoryImpl authRepository;
   final MovieRepository movieRepository;
+  final ReviewRepository reviewRepository;
 
   const MyApp({
     super.key,
     required this.authRepository,
     required this.movieRepository,
+    required this.reviewRepository,
   });
 
   @override
@@ -66,6 +87,9 @@ class MyApp extends StatelessWidget {
 
         // Movie Details
         BlocProvider(create: (_) => MovieDetailsCubit(movieRepository)),
+
+        // Reviews
+        BlocProvider(create: (_) => ReviewCubit(reviewRepository)),
       ],
       child: MaterialApp(
         navigatorKey: NavigationManager.navigatorKey,

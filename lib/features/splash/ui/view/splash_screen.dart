@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_graduation_project/core/navigation/navigation_manager.dart';
 import 'package:flutter_graduation_project/core/theme/app_text_styles.dart';
 import 'package:flutter_graduation_project/common/widgets/main_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +13,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -26,15 +26,9 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(seconds: 2));
 
     if (token != null && token.isNotEmpty) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const MainNavigation()),
-      );
+      NavigationManager.pushReplacement(const LoginScreen());
     } else {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const LoginScreen()),
-      );
+      NavigationManager.pushAndRemoveUntil(const MainNavigation());
     }
   }
 

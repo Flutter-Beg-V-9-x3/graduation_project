@@ -37,13 +37,7 @@ class MovieRatingSection extends StatelessWidget {
       children: [
         Text(
           "AVERAGE RATING",
-          style: AppTextStyles.labelUppercase.copyWith(
-            fontSize: 16,
-            color: Colors.white.withOpacity(0.7),
-            letterSpacing: 1,
-            height: 1.2,
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppTextStyles.labelUppercase
         ),
         const SizedBox(height: 8),
 
@@ -107,13 +101,7 @@ class MovieRatingSection extends StatelessWidget {
       children: [
         Text(
           "ROTTEN TOMATOES",
-          style: AppTextStyles.labelUppercase.copyWith(
-            fontSize: 16,
-            color: Colors.white.withOpacity(0.7),
-            letterSpacing: 1,
-            height: 1.2,
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppTextStyles.labelUppercase
         ),
         const SizedBox(height: 8),
 

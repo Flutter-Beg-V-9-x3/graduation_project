@@ -30,7 +30,8 @@ class _ReviewCommentBoxState extends State<ReviewCommentBox> {
               maxLines: null,
               expands: true,
               textAlignVertical: TextAlignVertical.top,
-              style: AppTextStyles.reviewDate,
+              style: AppTextStyles.reviewContent.copyWith(fontSize: 18),
+
               decoration: const InputDecoration(
                 hintText:
                     'Share your thoughts on the movie... What\n did you like? What did you dislike?',

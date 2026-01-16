@@ -6,11 +6,10 @@ import 'package:flutter_graduation_project/core/theme/app_colors.dart';
 import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_action_rating_buttons.dart';
 import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_cast_section.dart.dart';
 import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_header_widget.dart';
-import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_reviews_widget.dart';
 import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_rating_section.dart';
 import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_synopsis_section.dart';
 import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/movie_reviews_header_section.dart';
-import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/other_reviews_section.dart';
+import 'package:flutter_graduation_project/features/movie_details_1/ui/widget/reviews_section.dart';
 
 // Cubit
 import 'package:flutter_graduation_project/features/movies/logic/movie_details_cubit.dart';
@@ -66,31 +65,38 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
                   const SizedBox(height: 10),
 
+                  /// Action Buttons (Watchlist, Like, Share)
                   ActionRatingSection(movie: movie),
 
                   const SizedBox(height: 20),
 
+                  /// Rating Section (Stars + Score)
                   MovieRatingSection(movie: movie),
 
                   const SizedBox(height: 20),
 
+                  /// Synopsis
                   MovieSynopsisSection(movie: movie),
 
                   const SizedBox(height: 20),
 
+                  /// Cast Section
                   SynopsisCastSection(movie: movie),
 
                   const SizedBox(height: 30),
 
-                  MovieReviewsHeaderSection(),
+                  /// Reviews Header (Title + Add Review Button)
+                  MovieReviewsHeaderSection(
+                    movieId: movie.id,
+                    movieTitle: movie.title,
+                    moviePoster: movie.posterUrl,
+                    movieInfo: "${movie.year} • ${movie.genreName ?? ''}",
+                  ),
 
                   const SizedBox(height: 20),
 
+                  /// Reviews Section (User Review + Other Reviews)
                   ReviewsSection(movie: movie),
-
-                  const SizedBox(height: 20),
-
-                  OtherReviewsSection(movie: movie),
 
                   const SizedBox(height: 40),
                 ],

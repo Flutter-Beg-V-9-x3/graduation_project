@@ -44,7 +44,7 @@ class TrendingSection extends StatelessWidget {
 
         // ------------------ Responsive List ------------------
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.35,
+          height: MediaQuery.of(context).size.height * 0.50,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.only(left: 20),

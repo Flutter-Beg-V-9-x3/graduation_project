@@ -97,8 +97,8 @@ class _ActionRatingSectionState extends State<ActionRatingSection> {
                 ),
                 child: Icon(
                   isBookmarkHovered
-                      ? Icons.bookmark_add
-                      : Icons.bookmark_add_outlined,
+                      ? Icons.bookmark_add_outlined
+                      : Icons.bookmark_add,
                   color: isBookmarkHovered
                       ? AppColors.background
                       : AppColors.textPrimary,
