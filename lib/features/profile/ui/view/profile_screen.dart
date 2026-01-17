@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_graduation_project/features/auth/logic/auth_cubit.dart';
-import 'package:flutter_graduation_project/features/auth/logic/auth_state.dart';
+import 'package:flutter_graduation_project/features/auth/Presentation/cubit/auth_cubit.dart';
+import 'package:flutter_graduation_project/features/auth/Presentation/cubit/auth_state.dart';
 import 'package:flutter_graduation_project/features/profile/ui/widget/logout_button.dart';
 import 'package:flutter_graduation_project/features/profile/ui/widget/profile_header.dart';
 import 'package:flutter_graduation_project/features/profile/ui/widget/profile_menu_items.dart';

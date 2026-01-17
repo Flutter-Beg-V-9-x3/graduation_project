@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_graduation_project/features/auth/logic/auth_cubit.dart';
-import 'package:flutter_graduation_project/features/login/ui/view/login_screen.dart';
+import 'package:flutter_graduation_project/features/auth/Presentation/cubit/auth_cubit.dart';
+import 'package:flutter_graduation_project/features/auth/Presentation/ui/view/login_screen.dart';
+
 
 class LogoutButton extends StatelessWidget {
   const LogoutButton({super.key});

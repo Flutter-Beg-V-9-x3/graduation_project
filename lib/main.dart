@@ -6,7 +6,7 @@ import 'package:flutter_graduation_project/core/api/interceptors/token_intercept
 
 import 'package:flutter_graduation_project/core/navigation/navigation_manager.dart';
 import 'package:flutter_graduation_project/core/theme/app_theme.dart';
-import 'package:flutter_graduation_project/features/Splash/ui/view/splash_screen.dart';
+import 'package:flutter_graduation_project/features/Splash/view/splash_screen.dart';
 
 // API
 import 'core/api/dio_consumer.dart';
@@ -14,18 +14,18 @@ import 'core/api/dio_consumer.dart';
 // Auth
 import 'features/auth/data/datasources/auth_remote_datasource.dart';
 import 'features/auth/data/repository/auth_repository_impl.dart';
-import 'features/auth/logic/auth_cubit.dart';
+import 'features/auth/Presentation/cubit/auth_cubit.dart';
 
 // Movies
 import 'features/movies/data/datasource/movie_remote_data_source.dart';
 import 'features/movies/data/repository/movie_repository.dart';
-import 'features/movies/logic/movie_cubit.dart';
-import 'features/movies/logic/movie_details_cubit.dart';
+import 'features/movies/Presentation/cubit/movie_cubit.dart';
+import 'features/movies/Presentation/cubit/movie_details_cubit.dart';
 
 // Reviews
 import 'features/reviews/data/datasource/review_remote_data_source.dart';
 import 'features/reviews/data/repository/review_repository.dart';
-import 'features/reviews/logic/review_cubit.dart';
+import 'features/reviews/Presentation/cubit/review_cubit.dart';
 
 void main() {
   final dio = Dio();
