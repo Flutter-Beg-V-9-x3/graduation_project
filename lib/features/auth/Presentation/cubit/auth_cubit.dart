@@ -58,7 +58,11 @@ class AuthCubit extends Cubit<AuthState> {
   /// -----------------------------
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
+
     await prefs.remove("token");
+    await prefs.remove("email");
+    await prefs.remove("name");
+
     emit(AuthInitial());
   }
 }

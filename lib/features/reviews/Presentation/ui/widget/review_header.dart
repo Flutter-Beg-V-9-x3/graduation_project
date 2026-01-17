@@ -23,7 +23,7 @@ class ReviewHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double headerHeight = MediaQuery.of(context).size.height * 0.40;
+    final double headerHeight = MediaQuery.of(context).size.height * 0.45;
 
     return ClipRect(
       child: SizedBox(

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_graduation_project/features/auth/Presentation/cubit/auth_cubit.dart';
 import 'package:flutter_graduation_project/features/auth/Presentation/ui/view/login_screen.dart';
 
-
 class LogoutButton extends StatelessWidget {
   const LogoutButton({super.key});
 
@@ -13,10 +12,33 @@ class LogoutButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: ElevatedButton(
         onPressed: () async {
-          //log out
+          final shouldLogout = await showDialog<bool>(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text("Confirm Logout"),
+                content: const Text("Are you sure you want to log out?"),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, false),
+                    child: const Text("Cancel"),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    child: const Text(
+                      "Logout",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+
+          if (shouldLogout != true) return;
+
           await context.read<AuthCubit>().logout();
 
-          //Logged out successfully
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text("Logged out successfully"),
@@ -25,7 +47,6 @@ class LogoutButton extends StatelessWidget {
             ),
           );
 
-          //Go to the login page
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (_) => const LoginScreen()),
