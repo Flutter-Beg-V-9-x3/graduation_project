@@ -71,7 +71,7 @@ class TrailerBottomControls extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 IconButton(
                   icon: Icon(
@@ -83,7 +83,7 @@ class TrailerBottomControls extends StatelessWidget {
                   ),
                   onPressed: onVolumeToggle,
                 ),
-                const SizedBox(width: 10),
+                //   const SizedBox(width: 10),
                 IconButton(
                   icon: const Icon(
                     Icons.closed_caption,
@@ -98,7 +98,7 @@ class TrailerBottomControls extends StatelessWidget {
                     );
                   },
                 ),
-                const SizedBox(width: 10),
+                //  const SizedBox(width: 10),
                 IconButton(
                   icon: const Icon(
                     Icons.replay_10,
@@ -113,7 +113,7 @@ class TrailerBottomControls extends StatelessWidget {
                     );
                   },
                 ),
-                const SizedBox(width: 10),
+                // const SizedBox(width: 10),
                 IconButton(
                   iconSize: 64,
                   icon: Icon(
@@ -128,7 +128,7 @@ class TrailerBottomControls extends StatelessWidget {
                         : controller.play();
                   },
                 ),
-                const SizedBox(width: 10),
+                // const SizedBox(width: 10),
                 IconButton(
                   icon: const Icon(
                     Icons.forward_10,
@@ -141,7 +141,7 @@ class TrailerBottomControls extends StatelessWidget {
                     controller.seekTo(newPos);
                   },
                 ),
-                const SizedBox(width: 10),
+                //  const SizedBox(width: 10),
                 IconButton(
                   icon: const Icon(
                     Icons.settings,
@@ -154,7 +154,7 @@ class TrailerBottomControls extends StatelessWidget {
                     );
                   },
                 ),
-                const SizedBox(width: 10),
+                //  const SizedBox(width: 10),
                 IconButton(
                   icon: Icon(
                     MediaQuery.of(context).orientation == Orientation.landscape

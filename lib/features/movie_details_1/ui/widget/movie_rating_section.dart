@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_graduation_project/features/movies/data/models/movie_details_model.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
 class MovieRatingSection extends StatelessWidget {
-  const MovieRatingSection({super.key});
+  const MovieRatingSection({super.key, required  MovieDetailsModel movie});
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +37,7 @@ class MovieRatingSection extends StatelessWidget {
       children: [
         Text(
           "AVERAGE RATING",
-          style: AppTextStyles.labelUppercase.copyWith(
-            fontSize: 16,
-            color: Colors.white.withOpacity(0.7),
-            letterSpacing: 1,
-            height: 1.2,
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppTextStyles.labelUppercase
         ),
         const SizedBox(height: 8),
 
@@ -106,13 +101,7 @@ class MovieRatingSection extends StatelessWidget {
       children: [
         Text(
           "ROTTEN TOMATOES",
-          style: AppTextStyles.labelUppercase.copyWith(
-            fontSize: 16,
-            color: Colors.white.withOpacity(0.7),
-            letterSpacing: 1,
-            height: 1.2,
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppTextStyles.labelUppercase
         ),
         const SizedBox(height: 8),
 

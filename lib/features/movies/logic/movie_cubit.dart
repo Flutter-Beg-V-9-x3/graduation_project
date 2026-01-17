@@ -1,16 +1,17 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_graduation_project/features/movies/data/repository/movie_repository.dart';
-import 'movie_state.dart';
+import 'package:flutter_graduation_project/features/movies/logic/movie_state.dart';
 
 class MovieCubit extends Cubit<MovieState> {
-  final MovieRepository movieRepository;
+  final MovieRepository repository;
 
-  MovieCubit({required this.movieRepository}) : super(MovieInitial());
+  MovieCubit(this.repository) : super(MovieInitial());
 
-  void fetchMovies() async {
+  /// Fetch all movies
+  Future<void> fetchMovies() async {
     emit(MovieLoading());
 
-    final result = await movieRepository.getMovies();
+    final result = await repository.getMovies();
 
     result.fold(
       (failure) => emit(MovieError(failure.message)),
@@ -18,14 +19,15 @@ class MovieCubit extends Cubit<MovieState> {
     );
   }
 
-  void fetchMovieDetails(int movieId) async {
+  /// Fetch movie details
+  Future<void> fetchMovieDetails(int id) async {
     emit(MovieLoading());
 
-    final result = await movieRepository.getMovieDetails(movieId);
+    final result = await repository.getMovieDetails(id);
 
     result.fold(
       (failure) => emit(MovieError(failure.message)),
-      (movieDetails) => emit(MovieDetailsLoaded(movieDetails)),
+      (movie) => emit(MovieDetailsLoaded(movie)),
     );
   }
 }

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_graduation_project/features/movies/data/models/movie_details_model.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import 'package:flutter_graduation_project/features/in_app_trailer_player/ui/view/trailer_player.dart';
 
 class ActionRatingSection extends StatefulWidget {
-  const ActionRatingSection({super.key});
+  const ActionRatingSection({super.key, required MovieDetailsModel movie});
 
   @override
   State<ActionRatingSection> createState() => _ActionRatingSectionState();
 }
 
 class _ActionRatingSectionState extends State<ActionRatingSection> {
-  bool isBookmarkHovered = false;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -72,38 +71,24 @@ class _ActionRatingSectionState extends State<ActionRatingSection> {
           ),
 
           const SizedBox(width: 12),
-
-          MouseRegion(
-            onEnter: (_) => setState(() => isBookmarkHovered = true),
-            onExit: (_) => setState(() => isBookmarkHovered = false),
-            child: GestureDetector(
-              onTap: () {},
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                height: 48,
-                width: 48,
-                decoration: BoxDecoration(
-                  color: isBookmarkHovered
-                      ? AppColors.textPrimary
-                      : AppColors.surfaceAlt,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: isBookmarkHovered
-                        ? AppColors.textPrimary
-                        : AppColors.borderWhite5,
-                    width: 1,
-                  ),
-                ),
-                child: Icon(
-                  isBookmarkHovered
-                      ? Icons.bookmark_add
-                      : Icons.bookmark_add_outlined,
-                  color: isBookmarkHovered
-                      ? AppColors.background
-                      : AppColors.textPrimary,
-                  size: 22,
-                ),
+          IconButton(
+            onPressed: () {
+              setState(() {});
+            },
+            icon: Icon(
+              Icons.bookmark_add_rounded,
+              color: Colors.white,
+              size: 24,
+            ),
+            style: IconButton.styleFrom(
+              backgroundColor: Colors.white.withOpacity(0.12),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
+              padding: const EdgeInsets.all(12),
+              fixedSize: const Size(48, 48),
+              side: BorderSide(color: Colors.white.withOpacity(0.25), width: 1),
             ),
           ),
         ],
