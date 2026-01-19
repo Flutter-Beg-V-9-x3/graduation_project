@@ -30,12 +30,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const LoginHeader(),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const LoginHeader(),
 
-          Expanded(
-            child: SingleChildScrollView(
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -104,7 +105,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
 
-                  /// -------------------------------------------------- ///
                   const SizedBox(height: 16),
 
                   const OrDivider(),
@@ -125,8 +125,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

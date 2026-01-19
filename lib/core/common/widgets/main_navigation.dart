@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_graduation_project/core/theme/app_text_styles.dart';
 import 'package:flutter_graduation_project/features/movies/Presentation/ui/view/home_screen.dart';
-import 'package:flutter_graduation_project/features/profile/ui/view/profile_screen.dart';
+import 'package:flutter_graduation_project/features/profile/view/profile_screen.dart';
 import 'custom_bottom_nav.dart';
 
 class MainNavigation extends StatefulWidget {

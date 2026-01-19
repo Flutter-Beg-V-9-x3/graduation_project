@@ -65,18 +65,18 @@ class _ReviewScreenState extends State<ReviewScreen> {
     if (widget.isEditMode) {
       // 2. Handle Update Logic
       await context.read<ReviewCubit>().updateReview(
-            widget.movieId,
-            widget.reviewId!,
-            rating: rating,
-            comment: comment,
-          );
+        widget.movieId,
+        widget.reviewId!,
+        rating: rating,
+        comment: comment,
+      );
     } else {
       // 3. Handle Create Logic
       await context.read<ReviewCubit>().createReview(
-            widget.movieId,
-            rating: rating,
-            comment: comment,
-          );
+        widget.movieId,
+        rating: rating,
+        comment: comment,
+      );
     }
 
     // 4. Return 'true' to indicate success to the previous screen.
@@ -88,52 +88,41 @@ class _ReviewScreenState extends State<ReviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          // --- Top Section: Header & Star Rating ---
-          ReviewHeader(
-            onBack: onBack,
-            onCancel: onBack,
-            movieTitle: widget.movieTitle,
-            moviePoster: widget.moviePoster,
-            movieInfo: widget.movieInfo,
-            // Update the local rating state when user selects stars
-            onRatingSelected: (value) {
-              setState(() => rating = value);
-            },
-          ),
-
-          // --- Bottom Section: Comment Input & Buttons ---
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Column(
-                children: [
-                  // Text Input for Review
-                  ReviewCommentBox(
-                    initialText: widget.initialComment,
-                    onChanged: (value) => comment = value,
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  // Main Action Button (Submit / Update)
-                  AppButton(
-                    text: widget.isEditMode ? 'Update Review' : 'Submit Review',
-                    onPressed: _submitReview,
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  // Secondary Button (Discard / Cancel)
-                  secondaryTextButton("Discard Changes", onBack),
-
-                  const SizedBox(height: 40),
-                ],
-              ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ReviewHeader(
+              onBack: onBack,
+              onCancel: onBack,
+              movieTitle: widget.movieTitle,
+              moviePoster: widget.moviePoster,
+              movieInfo: widget.movieInfo,
+              onRatingSelected: (value) {
+                setState(() => rating = value);
+              },
             ),
-          ),
-        ],
+
+            const SizedBox(height: 12),
+
+            ReviewCommentBox(
+              initialText: widget.initialComment,
+              onChanged: (value) => comment = value,
+            ),
+
+            const SizedBox(height: 12),
+
+            AppButton(
+              text: widget.isEditMode ? 'Update Review' : 'Submit Review',
+              onPressed: _submitReview,
+            ),
+
+            const SizedBox(height: 12),
+
+            secondaryTextButton("Discard Changes", onBack),
+
+            const SizedBox(height: 24),
+          ],
+        ),
       ),
     );
   }
